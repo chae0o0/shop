@@ -8,6 +8,8 @@ import img02 from "./img/bread02.png";
 import img03 from "./img/bread03.png";
 import { useState } from "react";
 import data from "./data.js"; // -> original 데이터
+import Bread from "./components/Bread.js";
+import BreadList from "./components/BreadList.js";
 
 function App() {
   let [breads] = useState(data);
@@ -87,49 +89,7 @@ function App() {
 
 // // 이거 왜 만들었지 -> 모달이 아니라 반복되는 영역을 자식컴포넌트로 분리
 // 여러번...
-/*
-props = {
-  title: "",
-  content: "",
-  price: "",
-  img: ""
-}
-props = {
-  bread: {} -> bread가 들어갈거야.
-}
-*/
-function Bread(props) {
-  return (
-    <>
-      <Container>
-        <Row>
-          <Col>
-            <img width="20%" src={props.bread.img} />
-            <h4>{props.bread.title}</h4>
-            <p>{props.bread.content}</p>
-            <p>{props.bread.price}</p>
-          </Col>
-        </Row>
-      </Container>
-    </>
-  );
-}
 
-/*
-props ={
-  breads= [] // bread[]
-}
- */
-function BreadList(props) {
-  // i = 0 / breads[i] == bread
-  return (
-    <>
-     {props.breads.map(function (bread, i) {
-        return (
-          <Bread bread={bread} />
-        );
-      })}
-    </>
-  );
-}
+
+
 export default App;
