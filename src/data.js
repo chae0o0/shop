@@ -32,6 +32,7 @@ let data = [
       price : "5900 원",
       img: img03
     }
+   
   ] 
 
   export default data
