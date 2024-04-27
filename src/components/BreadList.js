@@ -13,7 +13,7 @@ function BreadList(props) {
       <Row>
        {props.breads.map(function (bread, i) {
           return (
-            <Col key={i}>
+            <Col>
             <Bread bread={bread} />
             </Col>
           );
