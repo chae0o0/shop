@@ -8,6 +8,9 @@ import data from "./data.js"; // -> original 데이터
 import BreadList from "./components/BreadList.js";
 import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom';
 import Detail from "./components/Detail.js";
+import About from "./components/About.js";
+import Event from "./components/Event.js";
+
 
 
 function App() {
@@ -24,9 +27,20 @@ function App() {
           </Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">홈</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail')}}>상세페이지</Nav.Link>
-            <Nav.Link onClick={()=>{navigate(-1)}}>뒤로가기</Nav.Link>
-
+            <Nav.Link
+              onClick={() => {
+                navigate("/detail");
+              }}
+            >
+              상세페이지
+            </Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              뒤로가기
+            </Nav.Link>
           </Nav>
           <Nav className="">
             <Nav.Link href="member">💃</Nav.Link>
@@ -47,13 +61,6 @@ function App() {
           </Form>
         </Container>
       </Navbar>
-
-
-      
-
-
-
-
 
       {/* 컴포넌트 없이 Map 돌린 것 
       {breads.map(function (bread, i) {
@@ -99,12 +106,24 @@ function App() {
           }
         />
 
-         <Route
-          path="/detail"
-          element={
-            <Detail/>
-          }
-        /> 
+        <Route path="/detail" element={<Detail breads={breads} />} />
+
+        <Route path="/*" element={<div>없는 페이지입니다</div>} />
+
+          {/* Nested Routes라는것 /about/memeber 이렇게 들어가라는거 
+            About도 보여주고 memeber도 보여줌
+            근데 안에 어디에 보여줄지 정해야해서 Outlet으로 정해야함
+            유사페이지만들때 주로 사용함 */}
+        <Route path="/about" element={<About />}>
+          <Route path="/about/memeber" element={<div>멤버임</div>} />
+          <Route path="/about/location" element={<div>위치정보임</div>} />
+        </Route>
+
+        <Route path="/event" element={<Event />}>
+          <Route path="/event/one" element={<div>첫 주문시 양배추즙 서비스</div>} />
+          <Route path="/event/two" element={<div> 생일 기념 쿠폰받기</div>} />
+        </Route>
+
       </Routes>
     </>
   );
