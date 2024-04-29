@@ -3,17 +3,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Button,Navbar, Container, Nav, Form, Row, Col, Modal,} from "react-bootstrap";
 import mainImg from "./img/bread3.jpg";
-import img01 from "./img/bread01.png";
 import { useState } from "react";
 import data from "./data.js"; // -> original 데이터
-import Bread from "./components/Bread.js";
 import BreadList from "./components/BreadList.js";
-import {Routes, Route, Link} from 'react-router-dom';
-import BreadDtail from './components/BreadDetail.js';
+import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom';
+import Detail from "./components/Detail.js";
 
 
 function App() {
   let [breads] = useState(data);
+  let navigate = useNavigate();
   
 
   return (
@@ -25,8 +24,9 @@ function App() {
           </Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">홈</Nav.Link>
-            <Nav.Link href="/detail">상세페이지</Nav.Link>
-            <Nav.Link href="/detail">옴늄늄</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail')}}>상세페이지</Nav.Link>
+            <Nav.Link onClick={()=>{navigate(-1)}}>뒤로가기</Nav.Link>
+
           </Nav>
           <Nav className="">
             <Nav.Link href="member">💃</Nav.Link>
@@ -47,6 +47,13 @@ function App() {
           </Form>
         </Container>
       </Navbar>
+
+
+      
+
+
+
+
 
       {/* 컴포넌트 없이 Map 돌린 것 
       {breads.map(function (bread, i) {
@@ -92,22 +99,12 @@ function App() {
           }
         />
 
-        <Route
+         <Route
           path="/detail"
           element={
-            <div className="container">
-              <div className="row">
-                <div className="col-md-6">
-                  {breads.map(function (BreadDetail, i) {
-                    // i = 0 / breads[i] == bread
-                    return <Bread showButton={true} BreadDetail={BreadDetail} 
-                    />;
-                  })}
-                </div>
-              </div>
-            </div>
+            <Detail/>
           }
-        />
+        /> 
       </Routes>
     </>
   );
