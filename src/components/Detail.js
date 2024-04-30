@@ -5,8 +5,8 @@ import img05 from '../img/bread05.jpg';
 function Detail(props) {
 
   let {id} = useParams();
-  let findBreads = props.breads.find(function(x){
-    return x.id == id
+  let findBreads = props.breads.find(function(breads){
+    return breads.id == id
   })
 
     return (
