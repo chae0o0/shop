@@ -1,17 +1,24 @@
+import { useParams } from 'react-router-dom';
 import img05 from '../img/bread05.jpg';
 
 
 function Detail(props) {
+
+  let {id} = useParams();
+  let findBreads = props.breads.find(function(x){
+    return x.id == id
+  })
+
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            <img src={img05} width="80%" />
+            <img src={findBreads.img} width="80%" />
           </div>
           <div className="col-md-6">
-            <h4 className="pt-5">{props.breads[0].title}</h4>
-            <p>{props.breads[0].content}</p>
-            <p>{props.breads[0].price}</p>
+            <h4 className="pt-5">{findBreads.title}</h4>
+            <p>{findBreads.content}</p>
+            <p>{findBreads.price} 원</p>
             <button className="btn btn-danger">주문하기</button>
           </div>
         </div>

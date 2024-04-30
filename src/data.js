@@ -13,7 +13,7 @@ let data = [
       id : 0,
       title : "냠냠 마싯다",
       content : "뚜레주르에서 팔아요",
-      price : "5800 원",
+      price : "5800 ",
       img: img01
     },
   
@@ -21,7 +21,7 @@ let data = [
       id : 1,
       title : "뇸뇸 마싯당",
       content : "파리바게트에서 팔아요",
-      price : "3200 원",
+      price : "3200 ",
       img: img02
     },
   
@@ -29,7 +29,7 @@ let data = [
       id : 2,
       title : "옴뇸뇸 마싯당",
       content : "뚜레주르에서 팔아요",
-      price : "5900 원",
+      price : "5900 ",
       img: img03
     }
    

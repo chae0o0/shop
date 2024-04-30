@@ -20,7 +20,7 @@ function Bread(props) {
               <img width="80%" src={props.bread.img} />
               <h4>{props.bread.title}</h4>
               <p>{props.bread.content}</p>
-              <p>{props.bread.price}</p>
+              <p>{props.bread.price}원</p>
             </Col>
           </Row>
         </Container>

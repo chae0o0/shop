@@ -14,7 +14,7 @@ import Event from "./components/Event.js";
 
 
 function App() {
-  let [breads] = useState(data);
+  let [breads , setBreads] = useState(data);
   let navigate = useNavigate();
   
 
@@ -106,11 +106,11 @@ function App() {
           }
         />
 
-        <Route path="/detail" element={<Detail breads={breads} />} />
+        <Route path="/detail/:id" element={<Detail breads={breads} />} />
 
         <Route path="/*" element={<div>없는 페이지입니다</div>} />
 
-          {/* Nested Routes라는것 /about/memeber 이렇게 들어가라는거 
+        {/* Nested Routes라는것 /about/memeber 이렇게 들어가라는거 
             About도 보여주고 memeber도 보여줌
             근데 안에 어디에 보여줄지 정해야해서 Outlet으로 정해야함
             유사페이지만들때 주로 사용함 */}
@@ -120,11 +120,19 @@ function App() {
         </Route>
 
         <Route path="/event" element={<Event />}>
-          <Route path="/event/one" element={<div>첫 주문시 양배추즙 서비스</div>} />
+          <Route
+            path="/event/one"
+            element={<div>첫 주문시 양배추즙 서비스</div>}
+          />
           <Route path="/event/two" element={<div> 생일 기념 쿠폰받기</div>} />
         </Route>
-
       </Routes>
+
+      <button onClick={()=>{
+    let copy = [...breads];
+    copy.sort((a, b) => a.price.localeCompare(b.price));
+    setBreads(copy);
+}}>내림차순 정렬</button>
     </>
   );
 }
