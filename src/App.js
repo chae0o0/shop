@@ -1,7 +1,8 @@
 import logo from "./logo.svg";
+import Button from 'react-bootstrap/Button';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { Button,Navbar, Container, Nav, Form, Row, Col, Modal,} from "react-bootstrap";
+import { Navbar, Container, Nav, Form, Row, Col, Modal,} from "react-bootstrap";
 import mainImg from "./img/bread3.jpg";
 import { useState } from "react";
 import data from "./data.js"; // -> original 데이터
@@ -102,6 +103,15 @@ function App() {
               ></div>
               {/* Map 까지 자식컴포너트로 분리한 것 */}
               <BreadList breads={breads} />
+
+              <Button variant="outline-warning" 
+                onClick={() => {
+                  let copy = [...breads];
+                  copy.sort((a, b) => a.price.localeCompare(b.price));
+                  setBreads(copy);
+                }}>낮은 가격순 정렬</Button>
+
+              
             </>
           }
         />
@@ -127,12 +137,6 @@ function App() {
           <Route path="/event/two" element={<div> 생일 기념 쿠폰받기</div>} />
         </Route>
       </Routes>
-
-      <button onClick={()=>{
-    let copy = [...breads];
-    copy.sort((a, b) => a.price.localeCompare(b.price));
-    setBreads(copy);
-}}>내림차순 정렬</button>
     </>
   );
 }
