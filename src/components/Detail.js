@@ -1,5 +1,16 @@
 import { useParams } from 'react-router-dom';
 import img05 from '../img/bread05.jpg';
+import styled from 'styled-components';
+
+
+let Btn = styled.button`
+  background : ${ props => props.bg};
+  color : ${ props => props.bg == 'blue' ? 'white' : 'black' };
+  padding: 10px;
+  `
+// let NewBtn = styled.button(Btn)`
+//   기존버튼 복제하는 방법
+// `
 
 
 function Detail(props) {
@@ -11,6 +22,8 @@ function Detail(props) {
 
     return (
       <div className="container">
+        <Btn bg="pink">버튼</Btn>
+        
         <div className="row">
           <div className="col-md-6">
             <img src={findBreads.img} width="80%" />

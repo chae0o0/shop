@@ -11,7 +11,6 @@ props = {
 }
 */
 function Bread(props) {
-  const showButton = props.showButton;
     return (
       <>
         <Container>
