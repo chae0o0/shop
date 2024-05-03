@@ -44,6 +44,9 @@ let Circle = styled.button`
 
 
 
+
+
+
 function Detail(props) {
 
 
@@ -53,7 +56,8 @@ function Detail(props) {
   let findBreads = props.breads.find(function(breads){
     return breads.id == id
   })
-  let [alert, setAlert] = useState(true);
+  let [sale, setSale] = useState(true);
+  let [num , setNum] = useState('');
 
 
 
@@ -70,32 +74,33 @@ function Detail(props) {
   */
   
   useEffect(()=>{
-   let a = setTimeout( ()=> {setAlert(false)},2000)
+   let a = setTimeout( ()=> {setSale(false)},2000)
 
     return ()=>{
       clearTimeout(a); //타이머 제거 함수 mount시 실행안됨, numonut시 실행
     }
   },[count])
 
+ 
+  useEffect(()=>{
+    if (isNaN(num) == true){
+      alert('그러지마세요');
+    }
+  }, [num])
 
 
 
     return (
       <div className="container">
-        {count}
-        <button onClick={()=>{setCount(count +1) }}>버튼</button>
         
         {
-          alert == true
+          sale == true
           ? <div className='alert alert-warning'>
             2초 이내 구매시 할인
             </div>
             : null
         }
 
-
-
-        <Btn bg="pink">버튼</Btn>
         <div className="row">
           <div className="col-md-6">
             <img src={findBreads.img} width="80%" />
@@ -109,9 +114,10 @@ function Detail(props) {
           
         </div>
       
-      <div>
-        <input type='text' placeholder="숫자만 입력하쇼"/>
-      </div>
+     
+        <input onChange={ (e) => {setNum(e.target.value)}} placeholder="숫자만 입력하쇼"/>
+        <button>검색</button>
+     
       
       </div>
 
