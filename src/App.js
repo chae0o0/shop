@@ -1,23 +1,24 @@
 import logo from "./logo.svg";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { Navbar, Container, Nav, Form, Row, Col, Modal,} from "react-bootstrap";
+import { Navbar, Container, Nav, Form, Row, Col, Modal } from "react-bootstrap";
 import mainImg from "./img/bread3.jpg";
 import { useState } from "react";
 import data from "./data.js"; // -> original 데이터
 import BreadList from "./components/BreadList.js";
-import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./components/Detail.js";
 import About from "./components/About.js";
 import Event from "./components/Event.js";
+import axios from "axios";
+
 
 
 
 function App() {
-  let [breads , setBreads] = useState(data);
+  let [breads, setBreads] = useState(data);
   let navigate = useNavigate();
-  
 
   return (
     <>
@@ -43,7 +44,7 @@ function App() {
               뒤로가기
             </Nav.Link>
           </Nav>
-          <Nav className="">
+          <Nav className="me-auto">
             <Nav.Link href="member">💃</Nav.Link>
             {/* <Nav.Link href="member">회원</Nav.Link>
             <Nav.Link href="login">로그인</Nav.Link> */}
@@ -62,6 +63,7 @@ function App() {
           </Form>
         </Container>
       </Navbar>
+
 
       {/* 컴포넌트 없이 Map 돌린 것 
       {breads.map(function (bread, i) {
@@ -104,21 +106,19 @@ function App() {
               {/* Map 까지 자식컴포너트로 분리한 것 */}
               <BreadList breads={breads} />
 
-              <Button variant="outline-warning" 
+              <Button
+                variant="outline-warning"
                 onClick={() => {
                   let copy = [...breads];
                   copy.sort((a, b) => a.price.localeCompare(b.price));
                   setBreads(copy);
-                }}>낮은 가격순 정렬</Button>
-
-              
+                }}
+              >
+                낮은 가격순 정렬
+              </Button>
             </>
           }
         />
-
-        <Route path="/detail/:id" element={<Detail breads={breads} />} />
-
-        <Route path="/*" element={<div>없는 페이지입니다</div>} />
 
         {/* Nested Routes라는것 /about/memeber 이렇게 들어가라는거 
             About도 보여주고 memeber도 보여줌
@@ -136,14 +136,36 @@ function App() {
           />
           <Route path="/event/two" element={<div> 생일 기념 쿠폰받기</div>} />
         </Route>
+
+        <Route path="/detail/:id" element={<Detail breads={breads} />} />
+
+        <Route path="/*" element={<div>없는 페이지입니다</div>} />
       </Routes>
+
+
+            
+      {/* 
+        <button onClick={()=>{
+        axios.get('https://codingapple1.github.io/shop/data2.json')
+        .then((data01)=>{
+            console.log(data01.data)
+        })
+        .catch(()=>{
+          console.log('실패함 ㅅㄱ')
+        })
+
+      }}>버튼</button> */}
+
+      
+  
+
+
+      
     </>
   );
 }
 
 // // 이거 왜 만들었지 -> 모달이 아니라 반복되는 영역을 자식컴포넌트로 분리
 // 여러번...
-
-
 
 export default App;
