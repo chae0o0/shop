@@ -45,6 +45,7 @@ function Detail(props) {
   });
   let [sale, setSale] = useState(true);
   let [num, setNum] = useState("");
+  let [tab, setTab] = useState(0);
 
   /*useEffect 사용법
   1. useEffect(()=>{  })     재 렌더링마다 코드실행하고  싶으면
@@ -102,21 +103,41 @@ function Detail(props) {
 
       <Nav justify variant="tabs" defaultActiveKey="/home1">
         <Nav.Item>
-          <Nav.Link eventKey="/home1">버튼0</Nav.Link>
+          <Nav.Link onClick={()=>{ setTab(0)}} eventKey="/home1">버튼0</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-1">버튼1</Nav.Link>
+          <Nav.Link onClick={()=>{ setTab(1)}} eventKey="link-1">버튼1</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-2">버튼2</Nav.Link>
+          <Nav.Link onClick={()=>{ setTab(2)}} eventKey="link-2">버튼2</Nav.Link>
         </Nav.Item>
       </Nav>
 
-      <div>내용0</div>
-      <div>내용1</div>
-      <div>내용2</div>
+      <TabContent tab={tab}/>
+
     </div>
+    
   );
 }
+
+// props 쓰기 싫을때 {state1이름 , state2이름 ...} 이렇게 작성하면
+// 밑에서 props.state1이름 이렇게 쓸 필요가 없음
+function TabContent({tab}){
+  if (tab == 0) {
+    return <div>내용0</div>
+  } 
+  else if (tab == 1) {
+    return <div>내용1</div>
+  } 
+  else if (tab == 2) {
+    return <div>내용2</div>
+  }
+}
+
+// if문 대신 쓸 수 있음
+// function TabContent({tab}){
+// [<div>내용0</div>,<div>내용1</div>,<div>내용2</div>][0]
+// }
+
 
 export default Detail;

@@ -31,7 +31,7 @@ function App() {
             <Nav.Link href="/">홈</Nav.Link>
             <Nav.Link
               onClick={() => {
-                navigate("/detail");
+                navigate("/detail/");
               }}
             >
               상세페이지
