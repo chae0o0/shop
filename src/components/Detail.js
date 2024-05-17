@@ -46,6 +46,14 @@ function Detail(props) {
   let [sale, setSale] = useState(true);
   let [num, setNum] = useState("");
   let [tab, setTab] = useState(0);
+  let [fade2, setFade2] = useState('')
+
+  useEffect(()=>{
+    let a = setTimeout(()=>{ setFade2('end')},600)
+    return ()=>{
+      setFade2('')
+    }
+  },[])
 
   /*useEffect 사용법
   1. useEffect(()=>{  })     재 렌더링마다 코드실행하고  싶으면
@@ -76,7 +84,7 @@ function Detail(props) {
   }, [num]);
 
   return (
-    <div className="container">
+    <div className={"container start" + fade2}>
       {sale == true ? (
         <div className="alert alert-warning">2초 이내 구매시 할인</div>
       ) : null}
