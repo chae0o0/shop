@@ -122,22 +122,41 @@ function Detail(props) {
 
 // props 쓰기 싫을때 {state1이름 , state2이름 ...} 이렇게 작성하면
 // 밑에서 props.state1이름 이렇게 쓸 필요가 없음
+
 function TabContent({tab}){
-  if (tab == 0) {
-    return <div>내용0</div>
-  } 
-  else if (tab == 1) {
-    return <div>내용1</div>
-  } 
-  else if (tab == 2) {
-    return <div>내용2</div>
-  }
+  
+  let [fade, setFade] = useState('')
+
+  useEffect(()=>{
+    let a = setTimeout(()=>{ setFade('end')},300)
+
+    return ()=>{
+      clearTimeout(a)
+      setFade('')
+    }
+  },[tab])
+
+  return (
+    <div className={'start' + fade}>
+      {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+      </div>
+  );
 }
 
-// if문 대신 쓸 수 있음
+
+// if문으로 하면 이렇게 
 // function TabContent({tab}){
-// [<div>내용0</div>,<div>내용1</div>,<div>내용2</div>][0]
+//   if (tab == 0) {
+//     return <div>내용0</div>
+//   } 
+//   else if (tab == 1) {
+//     return <div>내용1</div>
+//   } 
+//   else if (tab == 2) {
+//     return <div>내용2</div>
+//   }
 // }
+
 
 
 export default Detail;
