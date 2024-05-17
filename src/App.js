@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Navbar, Container, Nav, Form, Row, Col, Modal } from "react-bootstrap";
 import mainImg from "./img/bread3.jpg";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import data from "./data.js"; // -> original 데이터
 import BreadList from "./components/BreadList.js";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
@@ -14,10 +14,13 @@ import Event from "./components/Event.js";
 import axios from "axios";
 
 
-
+export let Context1 = createContext();
 
 function App() {
   let [breads, setBreads] = useState(data);
+  let [stock] = useState([10,11,12]);
+
+
   let navigate = useNavigate();
 
   return (
@@ -137,7 +140,11 @@ function App() {
           <Route path="/event/two" element={<div> 생일 기념 쿠폰받기</div>} />
         </Route>
 
-        <Route path="/detail/:id" element={<Detail breads={breads} />} />
+        <Route path="/detail/:id" element={
+        <Context1.Provider value={{ stock}}>
+        <Detail breads={breads} />
+        </Context1.Provider>
+        } />
 
         <Route path="/*" element={<div>없는 페이지입니다</div>} />
       </Routes>

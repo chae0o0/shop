@@ -1,8 +1,12 @@
 import { useParams } from "react-router-dom";
 import img05 from "../img/bread05.jpg";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import {Nav} from 'react-bootstrap';
+import data from "../data";
+import {Context1} from "../App.js";
+
+
 
 let Btn = styled.button`
   background: ${(props) => props.bg};
@@ -38,6 +42,9 @@ let Circle = styled.button`
 // }
 
 function Detail(props) {
+
+  let {stock} = useContext(Context1)
+  
   let [count, setCount] = useState(0);
   let { id } = useParams();
   let findBreads = props.breads.find(function (breads) {
@@ -98,6 +105,7 @@ function Detail(props) {
           <p>{findBreads.content}</p>
           <p>{findBreads.price} 원</p>
           <Circle>결!제</Circle>
+
         </div>
       </div>
 
@@ -121,7 +129,7 @@ function Detail(props) {
         </Nav.Item>
       </Nav>
 
-      <TabContent tab={tab}/>
+      <TabContent tab={tab} breads={props.breads}/>
 
     </div>
     
@@ -131,9 +139,10 @@ function Detail(props) {
 // props 쓰기 싫을때 {state1이름 , state2이름 ...} 이렇게 작성하면
 // 밑에서 props.state1이름 이렇게 쓸 필요가 없음
 
-function TabContent({tab}){
-  
+function TabContent({tab, breads}){
+  // let [breads, setBreads] = useState(data); 이거 쓰지말라고 ~~~
   let [fade, setFade] = useState('')
+  let {stock} = useContext(Context1)
 
   useEffect(()=>{
     let a = setTimeout(()=>{ setFade('end')},300)
@@ -146,7 +155,7 @@ function TabContent({tab}){
 
   return (
     <div className={'start' + fade}>
-      {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+      {[<div>{breads[0].title} </div>, <div>{breads[1].title}</div>, <div>{breads[2].title}</div>][tab]}
       </div>
   );
 }
