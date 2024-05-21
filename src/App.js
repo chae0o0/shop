@@ -141,7 +141,7 @@ function App() {
         </Route>
 
         <Route path="/detail/:id" element={
-        <Context1.Provider value={{ stock}}>
+        <Context1.Provider value={{ stock }}>
         <Detail breads={breads} />
         </Context1.Provider>
         } />

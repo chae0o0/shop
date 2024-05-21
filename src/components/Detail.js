@@ -43,7 +43,6 @@ let Circle = styled.button`
 
 function Detail(props) {
 
-  let {stock} = useContext(Context1)
   
   let [count, setCount] = useState(0);
   let { id } = useParams();
@@ -90,7 +89,15 @@ function Detail(props) {
     }
   }, [num]);
 
+
+  let {stock} = useContext(Context1)
+
+
+
+
+
   return (
+    
     <div className={"container start" + fade2}>
       {sale == true ? (
         <div className="alert alert-warning">2초 이내 구매시 할인</div>
@@ -155,7 +162,7 @@ function TabContent({tab, breads}){
 
   return (
     <div className={'start' + fade}>
-      {[<div>{breads[0].title} </div>, <div>{breads[1].title}</div>, <div>{breads[2].title}</div>][tab]}
+      {[<div>{breads[0].title} {stock[0]}</div>, <div>{breads[1].title}</div>, <div>{breads[2].title}</div>][tab]}
       </div>
   );
 }
