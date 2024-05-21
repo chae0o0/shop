@@ -12,6 +12,7 @@ import Detail from "./components/Detail.js";
 import About from "./components/About.js";
 import Event from "./components/Event.js";
 import axios from "axios";
+import Cart from "./components/Cart.js";
 
 
 export let Context1 = createContext();
@@ -147,6 +148,12 @@ function App() {
         } />
 
         <Route path="/*" element={<div>없는 페이지입니다</div>} />
+
+
+        <Route path="/cart" element={<Cart/>}/>
+      
+      
+      
       </Routes>
 
 
@@ -164,7 +171,6 @@ function App() {
       }}>버튼</button> */}
 
       
-  
 
 
       
