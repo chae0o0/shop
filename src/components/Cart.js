@@ -1,5 +1,6 @@
 import {Table} from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeName,changeBBang } from './Store';
 
 
 function Cart(){
@@ -11,6 +12,11 @@ function Cart(){
 
     let state = useSelector((state)=>{ return state})
     console.log(state.cart[0].name)
+
+
+    let dispatch = useDispatch()
+
+
 
     return (
       <>
@@ -32,8 +38,21 @@ function Cart(){
                     <tr>
                       <td>{state.cart[i].id}</td>
                       <td>{state.cart[i].name}</td>
-                      <td>{state.cart[i].count}</td>
+                      <td>
+                        {state.cart[i].count}
+                        <button>➕</button> &nbsp;
+                        <button>➖</button>
+                      </td>
                       <td>안녕</td>
+                      <td>
+                        <button
+                          onClick={() => {
+                            dispatch(changeBBang());
+                          }}
+                        >
+                          변경
+                        </button>
+                      </td>
                     </tr>
                   );
                 })
