@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import img05 from "../img/bread05.jpg";
 import styled from "styled-components";
-import { useEffect, useState,useContext } from "react";
-import {Nav} from 'react-bootstrap';
+import { useEffect, useState, useContext } from "react";
+import { Nav } from "react-bootstrap";
 import data from "../data";
-import {Context1} from "../App.js";
-
-
+import { Context1 } from "../App.js";
+import { addItem } from "./Store.js";
+import { useDispatch } from "react-redux";
 
 let Btn = styled.button`
   background: ${(props) => props.bg};
@@ -42,8 +42,6 @@ let Circle = styled.button`
 // }
 
 function Detail(props) {
-
-  
   let [count, setCount] = useState(0);
   let { id } = useParams();
   let findBreads = props.breads.find(function (breads) {
@@ -52,14 +50,16 @@ function Detail(props) {
   let [sale, setSale] = useState(true);
   let [num, setNum] = useState("");
   let [tab, setTab] = useState(0);
-  let [fade2, setFade2] = useState('')
+  let [fade2, setFade2] = useState("");
 
-  useEffect(()=>{
-    let a = setTimeout(()=>{ setFade2('end')},600)
-    return ()=>{
-      setFade2('')
-    }
-  },[])
+  useEffect(() => {
+    let a = setTimeout(() => {
+      setFade2("end");
+    }, 600);
+    return () => {
+      setFade2("");
+    };
+  }, []);
 
   /*useEffect 사용법
   1. useEffect(()=>{  })     재 렌더링마다 코드실행하고  싶으면
@@ -89,15 +89,25 @@ function Detail(props) {
     }
   }, [num]);
 
+  let { stock } = useContext(Context1);
 
-  let {stock} = useContext(Context1)
+  let dispatch = useDispatch();
+
+  useEffect(()=>{
+    console.log('detailjs')
+    let 꺼낸거 = localStorage.getItem('watchedBread')
+    꺼낸거 = JSON.parse(꺼낸거)
+    꺼낸거.push(findBreads.id)
+    꺼낸거 = new Set(꺼낸거)
+    꺼낸거 = Array.from(꺼낸거)
+    localStorage.setItem('watchedBread', JSON.stringify(꺼낸거))
+  }, [])
 
 
 
 
 
   return (
-    
     <div className={"container start" + fade2}>
       {sale == true ? (
         <div className="alert alert-warning">2초 이내 구매시 할인</div>
@@ -111,8 +121,14 @@ function Detail(props) {
           <h4 className="pt-5">{findBreads.title}</h4>
           <p>{findBreads.content}</p>
           <p>{findBreads.price} 원</p>
-          <Circle>결!제</Circle>
 
+          <Circle
+            onClick={() => {
+              dispatch(addItem({ id: 3, name: "메론빵", count: 1 }));
+            }}
+          >
+            결!제
+          </Circle>
         </div>
       </div>
 
@@ -126,61 +142,87 @@ function Detail(props) {
 
       <Nav justify variant="tabs" defaultActiveKey="/home1">
         <Nav.Item>
-          <Nav.Link onClick={()=>{ setTab(0)}} eventKey="/home1">버튼0</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setTab(0);
+            }}
+            eventKey="/home1"
+          >
+            버튼0
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={()=>{ setTab(1)}} eventKey="link-1">버튼1</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setTab(1);
+            }}
+            eventKey="link-1"
+          >
+            버튼1
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={()=>{ setTab(2)}} eventKey="link-2">버튼2</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setTab(2);
+            }}
+            eventKey="link-2"
+          >
+            버튼2
+          </Nav.Link>
         </Nav.Item>
       </Nav>
 
-      <TabContent tab={tab} breads={props.breads}/>
-
+      <TabContent tab={tab} breads={props.breads} />
     </div>
-    
   );
 }
 
 // props 쓰기 싫을때 {state1이름 , state2이름 ...} 이렇게 작성하면
 // 밑에서 props.state1이름 이렇게 쓸 필요가 없음
 
-function TabContent({tab, breads}){
+function TabContent({ tab, breads }) {
   // let [breads, setBreads] = useState(data); 이거 쓰지말라고 ~~~
-  let [fade, setFade] = useState('')
-  let {stock} = useContext(Context1)
+  let [fade, setFade] = useState("");
+  let { stock } = useContext(Context1);
 
-  useEffect(()=>{
-    let a = setTimeout(()=>{ setFade('end')},300)
+  useEffect(() => {
+    let a = setTimeout(() => {
+      setFade("end");
+    }, 300);
 
-    return ()=>{
-      clearTimeout(a)
-      setFade('')
-    }
-  },[tab])
+    return () => {
+      clearTimeout(a);
+      setFade("");
+    };
+  }, [tab]);
 
   return (
-    <div className={'start' + fade}>
-      {[<div>{breads[0].title} {stock[0]}</div>, <div>{breads[1].title}</div>, <div>{breads[2].title}</div>][tab]}
-      </div>
+    <div className={"start" + fade}>
+      {
+        [
+          <div>
+            {breads[0].title} {stock[0]}
+          </div>,
+          <div>{breads[1].title}</div>,
+          <div>{breads[2].title}</div>,
+        ][tab]
+      }
+    </div>
   );
 }
 
-
-// if문으로 하면 이렇게 
+// if문으로 하면 이렇게
 // function TabContent({tab}){
 //   if (tab == 0) {
 //     return <div>내용0</div>
-//   } 
+//   }
 //   else if (tab == 1) {
 //     return <div>내용1</div>
-//   } 
+//   }
 //   else if (tab == 2) {
 //     return <div>내용2</div>
 //   }
 // }
-
-
 
 export default Detail;

@@ -1,6 +1,7 @@
 import {Table} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeName,changeBBang } from './Store';
+import { changeName,changeBBang,addCount } from './Store';
+import {useState} from 'react';
 
 
 function Cart(){
@@ -15,6 +16,7 @@ function Cart(){
 
 
     let dispatch = useDispatch()
+
 
 
 
@@ -40,17 +42,15 @@ function Cart(){
                       <td>{state.cart[i].name}</td>
                       <td>
                         {state.cart[i].count}
-                        <button>➕</button> &nbsp;
-                        <button>➖</button>
                       </td>
                       <td>안녕</td>
                       <td>
                         <button
                           onClick={() => {
-                            dispatch(changeBBang());
+                            dispatch(addCount(state.cart[i].id));
                           }}
                         >
-                          변경
+                          추가
                         </button>
                       </td>
                     </tr>

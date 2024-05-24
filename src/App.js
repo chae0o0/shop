@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Navbar, Container, Nav, Form, Row, Col, Modal } from "react-bootstrap";
 import mainImg from "./img/bread3.jpg";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import data from "./data.js"; // -> original 데이터
 import BreadList from "./components/BreadList.js";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
@@ -18,27 +18,42 @@ import Cart from "./components/Cart.js";
 export let Context1 = createContext();
 
 function App() {
+  let obj = {name: 'park'}
+  localStorage.setItem('data',JSON.stringify(obj))
+  let 꺼낸거 = localStorage.getItem('data')
+  console.log(JSON.parse(꺼낸거).name);
+
   let [breads, setBreads] = useState(data);
   let [stock] = useState([10,11,12]);
 
 
   let navigate = useNavigate();
 
+  useEffect(()=>{
+    console.log('appjs')
+    localStorage.setItem('watchedBread', JSON.stringify( [] ))
+  },[]) 
+
+
+
+
   return (
     <>
       <Navbar data-bs-theme="dark" className="Main">
         <Container>
-          <Navbar.Brand href="#home" className="Nav_Main">
+          <Navbar.Brand  onClick={() => {
+                navigate("/");
+              }} className="Nav_Main cursor-pointer">
             빵순이빵
           </Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">홈</Nav.Link>
             <Nav.Link
               onClick={() => {
-                navigate("/detail/");
+                navigate("/cart");
               }}
             >
-              상세페이지
+              장바구니
             </Nav.Link>
             <Nav.Link
               onClick={() => {
@@ -67,7 +82,6 @@ function App() {
           </Form>
         </Container>
       </Navbar>
-
 
       {/* 컴포넌트 없이 Map 돌린 것 
       {breads.map(function (bread, i) {
@@ -141,23 +155,20 @@ function App() {
           <Route path="/event/two" element={<div> 생일 기념 쿠폰받기</div>} />
         </Route>
 
-        <Route path="/detail/:id" element={
-        <Context1.Provider value={{ stock }}>
-        <Detail breads={breads} />
-        </Context1.Provider>
-        } />
+        <Route
+          path="/detail/:id"
+          element={
+            <Context1.Provider value={{ stock }}>
+              <Detail breads={breads} />
+            </Context1.Provider>
+          }
+        />
 
         <Route path="/*" element={<div>없는 페이지입니다</div>} />
 
-
-        <Route path="/cart" element={<Cart/>}/>
-      
-      
-      
+        <Route path="/cart" element={<Cart />} />
       </Routes>
 
-
-            
       {/* 
         <button onClick={()=>{
         axios.get('https://codingapple1.github.io/shop/data2.json')
@@ -169,11 +180,6 @@ function App() {
         })
 
       }}>버튼</button> */}
-
-      
-
-
-      
     </>
   );
 }

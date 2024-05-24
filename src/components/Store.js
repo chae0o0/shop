@@ -37,19 +37,22 @@ let cart = createSlice({
     initialState : [
       {id : 1, name : '샐러드빵', count : 2},
       {id : 2, name : '치즈빵', count : 1}
+
     ],
 
     reducers:{
-        changeBBang(state){
-            return (
-                [
-                    {id : 1, name : '마늘빵', count : 2},
-                    {id : 2, name : '마싯다', count : 1}
-                  ]
-            )
+        addCount(state, action){
+          let No =   state.findIndex((a)=>{ return a.id === action.payload })
+           state[No].count++
+        },
+        addItem(state, action){
+            state.push(action.payload)
         }
     }
   })
+
+  export let {addCount} = cart.actions
+  export let {addItem} = cart.actions
 
 export default configureStore({
     reducer: {
@@ -58,5 +61,3 @@ export default configureStore({
         
     }
 })
-
-export let {changeBBang} = cart.actions
